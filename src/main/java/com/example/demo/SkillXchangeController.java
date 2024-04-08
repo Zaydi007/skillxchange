@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SkillXchangeController {
+
+    private final SkillXChangeDatabase skillXChangeDatabase;
+
+    @Autowired
+    public SkillXchangeController(SkillXChangeDatabase skillXChangeDatabase) {
+        this.skillXChangeDatabase = skillXChangeDatabase;
+    }
 
     @GetMapping("/skillxchange")
     public String skillXchangeLandingPage(Model model) {
@@ -27,14 +35,8 @@ public class SkillXchangeController {
                          @RequestParam("skills") String[] skills,
                          @RequestParam("skillsToLearn") String[] skillsToLearn,
                          Model model) {
-        // Process the form submission here
-        // You can store user information in a database or perform any other actions
-        
-        // For example, you can print the submitted information to the console
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-        System.out.println("Skills: " + String.join(", ", skills));
-        System.out.println("Skills to Learn: " + String.join(", ", skillsToLearn));
+        // Store user information
+        skillXChangeDatabase.saveUserData(username, password, skills, skillsToLearn);
         
         // Redirect the user to a success page or another appropriate page
         return "redirect:/success"; // Redirects to a success page
