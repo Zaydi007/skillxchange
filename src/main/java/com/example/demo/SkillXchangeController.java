@@ -39,6 +39,6 @@ public class SkillXchangeController {
         skillXChangeDatabase.saveUserData(username, password, skills, skillsToLearn);
         
         // Redirect the user to a success page or another appropriate page
-        return "redirect:/success"; // Redirects to a success page
+        return "redirect:/main"; // Redirects to the main page
     }
 }
