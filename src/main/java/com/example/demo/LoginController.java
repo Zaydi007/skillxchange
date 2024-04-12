@@ -26,7 +26,7 @@ public class LoginController {
         // Authenticate user against the database
         if (skillXChangeDatabase.isValidUser(username, password)) {
             // Redirect to a success page after successful login
-            return "redirect:/success"; // Redirects to a success page
+            return "redirect:/main"; // Redirects to the main page
         } else {
             // Add an error message and render the login page again
             redirectAttributes.addFlashAttribute("error", "Invalid username or password");
