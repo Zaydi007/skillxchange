@@ -2,3 +2,11 @@ JohnDoe,password123,hardware architect,Java Programming
 JaneSmith,pass456,data analytics,C++ Programming
 AliceWonder,secret789,Java,Python Programming
 BobBuilder,buildit321,C++,Web Development
+talha._.hahahaha,ahhahahah,Design,Writing
+szaidi1@islander.tamucc.edu,gcvauvcalj,Programming,Marketing
+tdyrc,vtvryxet,Marketing,Design
+tdyrc,vtvryxet,Marketing,Design
+asad,huhuhuh,Data Analysis,Writing
+dummy,123,Programming,Design
+ray,9966,Programming,Communication
+troy,123,Data Analysis,Design

@@ -1,96 +1,135 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>SkillXChange</title>
-<!--A header that says application name-->
-<div class ="appheader">
-	<h1>S     k     i     l     l     X     C     h     a     n     g     e</h1>
-</div>
-<style>
-	.appheader {
-        background-color: #e1e8e7;
-        color: black;
-        padding: 10px;
-        text-align: center;
-    }
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .sidebar {
-        height: 100%;
-        width: 200px;
-        position: fixed;
-        /* fixing the sidebar to lie below the header */
-        top: 100px;
-        left: 0;
-        background-color: #a3a3a3;
-        padding-top: 20px;
-		text-shadow: 0 0 4px #000;
-    }
-    
-    .tab-label {
-        color: #fff;
-        display: block;
-        padding: 10px 20px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        font-weight: bold;
-    }
-    .tab-content {
-        display: block;
-        padding: 20px;
-        text-align: center;
-    }
-    .tab-label:hover {
-    	/*tab changes color when user hovers over it */
-        background-color: #8c8c8c;
-    }
-    
-    .users-box {
-    	width: 250px;
-    	height: 60%;
-    	padding: 20px;
-    	border: 2px solid #ccc;
-    	border-radius: 5px;
-    	background-color: #f9f9f9;
-    	position: fixed;
-    	right: 75px;
-    }
-    
-    .search-box {
-    	width: 250px;
-    	height: 10%;
-    	padding: 20px;
-    	border: 2px solid #ccc;
-    	border-radius: 5px;
-    	background-color: #f9f9f9;
-    	position: fixed;
-    	left: 300px;   	
-    }
-    
-</style>
+    <title>SkillXChange</title>
+    <!--A header that says application name-->
+    <div class="appheader">
+        <h1>SkillXChange</h1>
+    </div>
+    <style>
+        .appheader {
+            background-color: #e1e8e7;
+            color: black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            /* fixing the sidebar to lie below the header */
+            top: 100px;
+            background-color: #a3a3a3;
+            padding-top: 20px;
+            text-shadow: 0 0 4px #000;
+        }
+
+        .tab-label {
+            color: #fff;
+            display: block;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: block;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .tab-label:hover {
+            /*tab changes color when user hovers over it */
+            background-color: #8c8c8c;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            margin-right: 220px;
+        }
+
+        .acquired-connections {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .potential-connection {
+            margin-bottom: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            width: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .potential-connection:hover {
+            background-color: #e9e9e9;
+        }
+
+        .username {
+            font-weight: bold;
+        }
+
+        .skills {
+            margin-top: 5px;
+        }
+
+        .connect-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="sidebar">
-	<!--providing links to the corresponding html pages for each tab-->
+<div class="sidebar" style="left: 0;">
+    <!--providing links to the corresponding html pages for each tab-->
     <a href="/main" class="tab-label">Home</a>
     <a href="/notifications" class="tab-label">Notifications</a>
     <a href="/userprofile" class="tab-label">User Profile</a>
     <a href="/messageinbox" class="tab-label">Message Inbox</a>
 </div>
 <div class="tab-content">
-    <h2>Home</h2>
+    <h2>Xchanges Awaiting</h2>
+    <!-- Display potential connections -->
+    <div th:each="connection : ${potentialConnections}" class="potential-connection">
+        <span class="username" th:text="${connection.username}"></span><br/>
+        <span class="skills">
+            <b>Skills:</b>
+            <span th:each="skill : ${connection.skills}" th:text="${skill}"></span>
+        </span><br/>
+        <span class="skills">
+            <b>Skills Seeking:</b>
+            <span th:each="skill : ${connection.skillsToLearn}" th:text="${skill}"></span>
+        </span><br/>
+        <button class="connect-button">Connect</button>
+    </div>
 </div>
-<div class="users-box">
-	<h2> Users with similar interests </h2>
-</div>
-<div class="search-box">
-	<h4>Search by username</h4>
-	<input type="text" id="searchbox" name="searchbox">
-	<button>Go</button>
+<div class="sidebar" style="right: 0;">
+    <h2>Acquired Connections</h2>
+    <!-- Add acquired connections list here -->
+    <div class="acquired-connections">
+        <!-- Replace this with dynamically populated acquired connections -->
+    </div>
 </div>
 </body>
 </html>
