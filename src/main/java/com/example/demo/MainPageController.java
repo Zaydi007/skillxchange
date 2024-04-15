@@ -11,37 +11,46 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MainPageController {
-	
-	@Autowired
-    private SkillXChangeDatabase skillXChangeDatabase;
-	
-	@GetMapping("/main")
-	public String showMainPage(Model model, HttpSession session) {
-	    String currentUser = (String) session.getAttribute("currentUser");
-	    if (currentUser != null) {
-	        UserProfile userProfile = skillXChangeDatabase.getUserProfile(currentUser);
-	        if (userProfile != null) {
-	            // Retrieve potential connections based on the user's skills to learn
-	            List<UserProfile> potentialConnections = skillXChangeDatabase.findPotentialConnections(userProfile);
-	            model.addAttribute("potentialConnections", potentialConnections);
-	        }
-	    }
-	    return "main";
-	}
 
-	@GetMapping("/notifications")
-	public String showNotifications(Model model)
-	{ return "notifications"; }
-	
-	@GetMapping("/userprofile")
-	public String showUserProfile(Model model)
-	{ return "userprofile"; }
-	
-	@GetMapping("/messageinbox")
-	public String showMessages(Model model)
-	{ return "messageinbox"; }
-	
-	
-	
+  @Autowired
+    private SkillXChangeDatabase skillXChangeDatabase;
+
+  @GetMapping("/main")
+  public String showMainPage(Model model, HttpSession session) {
+      String currentUser = (String) session.getAttribute("currentUser");
+      if (currentUser != null) {
+          UserProfile userProfile = skillXChangeDatabase.getUserProfile(currentUser);
+          if (userProfile != null) {
+              // Retrieve potential connections based on the user's skills to learn
+              List<UserProfile> potentialConnections = skillXChangeDatabase.findPotentialConnections(userProfile);
+              model.addAttribute("potentialConnections", potentialConnections);
+          }
+      }
+      return "main";
+  }
+
+  @GetMapping("/notifications")
+  public String showNotifications(Model model)
+  { return "notifications"; }
+
+  @GetMapping("/userprofile")
+  public String showUserProfile(Model model, HttpSession session) {
+      String currentUser = (String) session.getAttribute("currentUser");
+      if (currentUser != null) {
+          UserProfile userProfile = skillXChangeDatabase.getUserProfile(currentUser);
+          if (userProfile != null) {
+              model.addAttribute("userProfile", userProfile);
+          }
+      }
+      return "userprofile";
+  }
+
+
+  @GetMapping("/messageinbox")
+  public String showMessages(Model model)
+  { return "messageinbox"; }
+
+
+
 }
 
