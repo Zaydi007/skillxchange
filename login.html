@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('/images/newimage.jpg'); 
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif; /* Set font-family for better readability */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 35%; /* Adjust the width of the container as needed */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Set a semi-transparent white background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a shadow for better visibility */
+        }
+
+        h1 {
+            text-align: center; /* Center align the heading */
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db; /* Set background color for the button */
+            color: #00000; /* Set text color for the button */
+            cursor: pointer;
+            width: 100px;
+            height: 50px;
+            margin: auto;    /*Centering the button */
+            border: 1px solid #ccc;
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Change background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome back!</h1>
+        <form action="/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="login">Login</button>
+            <p>Don't have an account?</p>
+            <a href ="/signup">Sign up here</a>
+        </form>
+    </div>
