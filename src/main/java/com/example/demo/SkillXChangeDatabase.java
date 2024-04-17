@@ -13,6 +13,10 @@ public class SkillXChangeDatabase {
     private static final String USER_DATA_FILE = "userData.txt";
 
     private List<UserProfile> userProfiles;
+    private UserProfile firstConnection;
+    private UserProfile secondConnection;
+    private UserProfile thirdConnection;
+    
 
     public SkillXChangeDatabase() {
         userProfiles = new ArrayList<>();
@@ -94,17 +98,64 @@ public class SkillXChangeDatabase {
 
         return compatibilityScore;
     }
-    public List<UserProfile> findPotentialConnections(UserProfile currentUserProfile) {
+    /*public List<UserProfile> findPotentialConnections(UserProfile currentUserProfile) {
         List<UserProfile> potentialConnections = new ArrayList<>();
         for (UserProfile userProfile : userProfiles) {
             if (userProfile != currentUserProfile) {
                 int compatibilityScore = calculateCompatibility(currentUserProfile.getSkillsToLearn(), userProfile.getSkills(), userProfile);
-                if (compatibilityScore > 0) {
+                if (compatibilityScore > 1) {
                     potentialConnections.add(userProfile);
                 }
             }
         }
         return potentialConnections;
+    }*/
+    
+    public UserProfile getFirstConnection(UserProfile currentUserProfile)
+    {
+    	for(UserProfile userProfile : userProfiles)
+    	{
+    		if(userProfile != currentUserProfile)
+    		{
+    			int compatibilityScore = calculateCompatibility(currentUserProfile.getSkillsToLearn(), userProfile.getSkills(), userProfile);
+    			if(compatibilityScore > 1)
+    			{
+    				this.firstConnection = userProfile;
+    			}
+    		}
+    	}
+    	return firstConnection;
     }
-
+    
+    public UserProfile getSecondConnection(UserProfile currentUserProfile)
+    {
+    	for(UserProfile userProfile : userProfiles)
+    	{
+    		if(userProfile != currentUserProfile && userProfile != this.firstConnection)
+    		{
+    			int compatibilityScore = calculateCompatibility(currentUserProfile.getSkillsToLearn(), userProfile.getSkills(), userProfile);
+    			if(compatibilityScore > 1)
+    			{
+    				this.secondConnection = userProfile;
+    			}
+    		}
+    	}
+    	return secondConnection;
+    }
+    
+    public UserProfile getThirdConnection(UserProfile currentUserProfile)
+    {
+    	for(UserProfile userProfile : userProfiles)
+    	{
+    		if(userProfile != currentUserProfile && userProfile != this.firstConnection && userProfile != this.secondConnection)
+    		{
+    			int compatibilityScore = calculateCompatibility(currentUserProfile.getSkillsToLearn(), userProfile.getSkills(), userProfile);
+    			if(compatibilityScore > 1)
+    			{
+    				this.thirdConnection = userProfile;
+    			}
+    		}
+    	}
+    	return thirdConnection;
+    }  
 }
