@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,14 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class SkillXchangeController {
 
+	private static final Logger logger = LoggerFactory.getLogger(SkillXchangeController.class);
+
     private final SkillXChangeDatabase skillXChangeDatabase;
+    private final MessageService messageService; // Add this field
 
     @Autowired
-    public SkillXchangeController(SkillXChangeDatabase skillXChangeDatabase) {
+    public SkillXchangeController(SkillXChangeDatabase skillXChangeDatabase, MessageService messageService) {
         this.skillXChangeDatabase = skillXChangeDatabase;
+        this.messageService = messageService; // Initialize the messageService field
     }
 
     @GetMapping("/skillxchange")
@@ -41,4 +50,45 @@ public class SkillXchangeController {
         // Redirect the user to a success page or another appropriate page
         return "redirect:/main"; // Redirects to the main page
     }
+
+    @PostMapping("/send-message")
+    public String sendMessage(@RequestParam("receiver") String receiverUsername,
+                              @RequestParam("message") String message,
+                              HttpSession session) {
+        String senderUsername = (String) session.getAttribute("currentUser");
+        // Use the MessageService to send the message
+        messageService.sendMessage(senderUsername, receiverUsername, message);
+        return "redirect:/messageinbox"; // Redirect to the message inbox after sending the message
+    }
+
+    @GetMapping("/messageinbox")
+    public String showMessages(Model model, HttpSession session) {
+        String currentUser = (String) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            // Handle case where 'currentUser' is not present in the session
+            // For example, redirect the user to the login page
+            return "redirect:/login";
+        }
+        
+        List<String> messages = skillXChangeDatabase.getMessages(); // Assuming getMessages() doesn't require parameters
+        model.addAttribute("messages", messages);
+        return "messageinbox"; // Return the Thymeleaf template for message inbox
+    }
+    
+    @PostMapping("/connect")
+    public String connect(@RequestParam("username") String username, HttpSession session, Model model) {
+        String currentUser = (String) session.getAttribute("currentUser");
+        String notificationMessage = currentUser + " connected with you on SkillXChange!";
+        skillXChangeDatabase.sendNotification(username, notificationMessage);
+        
+        List<String> notifications = skillXChangeDatabase.getNotifications(); // Retrieve notifications
+        
+        logger.info("Notifications retrieved from database: {}", notifications);
+        
+        model.addAttribute("notifications", notifications); // Add notifications to the model
+        return "redirect:/main"; // Redirects to the main page after connecting
+    }
+
+
+
 }

@@ -17,7 +17,8 @@ public class LoginController {
     private SkillXChangeDatabase skillXChangeDatabase;
     
     @GetMapping("/login")
-    public String showLoginForm(Model model) {
+    public String showLoginForm(Model model)
+    {
         return "login"; // Renders the login.html template
     }
     
@@ -25,13 +26,16 @@ public class LoginController {
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         RedirectAttributes redirectAttributes,
-                        HttpSession session) {
+                        HttpSession session)
+    {
         // Authenticate user against the database
-        if (skillXChangeDatabase.isValidUser(username, password)) {
+        if (skillXChangeDatabase.isValidUser(username, password))
+        {
             // Set the current user in the session
             session.setAttribute("currentUser", username);
             return "redirect:/main"; // Redirects to the main page
-        } else {
+        } else 
+        {
             // Add an error message and render the login page again
             redirectAttributes.addFlashAttribute("error", "Invalid username or password");
             return "redirect:/login"; // Redirects to the login page
@@ -40,7 +44,8 @@ public class LoginController {
     
     // You can add a method to logout and invalidate the session
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session)
+    {
         // Invalidate the session and clear the current user attribute
         session.invalidate();
         return "redirect:/login"; // Redirects to the login page after logout

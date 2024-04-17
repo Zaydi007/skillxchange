@@ -45,11 +45,12 @@ public class MainPageController {
       return "userprofile";
   }
 
-
-  @GetMapping("/messageinbox")
-  public String showMessages(Model model)
-  { return "messageinbox"; }
-
+  @GetMapping("/mainPageMessages")
+  public String showMainPageMessages(Model model) {
+      List<String> messages = skillXChangeDatabase.getMessages(); // Assuming this method retrieves messages from the database
+      model.addAttribute("messages", messages);
+      return "messageinbox"; 
+  }
 
 
 }

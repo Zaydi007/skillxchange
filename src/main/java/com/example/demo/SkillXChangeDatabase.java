@@ -1,7 +1,8 @@
 package com.example.demo;
 
 import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,9 +11,13 @@ import java.util.List;
 @Service
 public class SkillXChangeDatabase {
 
+	private static final Logger logger = LoggerFactory.getLogger(SkillXChangeDatabase.class);
+	 
     private static final String USER_DATA_FILE = "userData.txt";
+    private static final String MESSAGE_DATA_FILE = "messages.txt"; // Define the message data file
 
     private List<UserProfile> userProfiles;
+    private List<String> notifications = new ArrayList<>();
 
     public SkillXChangeDatabase() {
         userProfiles = new ArrayList<>();
@@ -77,34 +82,104 @@ public class SkillXChangeDatabase {
         return null;
     }
 
-    public int calculateCompatibility(String[] userSkills, String[] skillsToLearn, UserProfile otherUserProfile) {
-        int compatibilityScore = 0;
+   /* public void sendMessage(String senderUsername, String receiverUsername, String message) {
+        UserProfile senderProfile = getUserProfile(senderUsername);
+        UserProfile receiverProfile = getUserProfile(receiverUsername);
 
-        for (String skill : userSkills) {
-            if (Arrays.asList(otherUserProfile.getSkills()).contains(skill)) {
-                compatibilityScore += 2; // Increment the score for shared skills
-            }
+        // Check if senderProfile or receiverProfile is null
+        if (senderProfile == null || receiverProfile == null) {
+            // Handle the case where either sender or receiver profile is not found
+            System.out.println("Sender or receiver profile not found.");
+            return;
         }
 
-        for (String skillToLearn : skillsToLearn) {
-            if (Arrays.asList(otherUserProfile.getSkills()).contains(skillToLearn)) {
-                compatibilityScore++; // Increment the score for skills the logged-in user needs to learn
-            }
+        // Add message to sender's messages
+        senderProfile.getMessages().add("You: " + message);
+
+        // Add message to receiver's messages
+        receiverProfile.getMessages().add(senderUsername + ": " + message);
+    }*/
+    public void sendMessage(String senderUsername, String receiverUsername, String message) {
+        UserProfile senderProfile = getUserProfile(senderUsername);
+        UserProfile receiverProfile = getUserProfile(receiverUsername);
+
+        // Check if senderProfile or receiverProfile is null
+        if (senderProfile == null || receiverProfile == null) {
+            // Handle the case where either sender or receiver profile is not found
+            System.out.println("Sender or receiver profile not found.");
+            return;
         }
 
-        return compatibilityScore;
+        // Add message to sender's messages
+        senderProfile.getMessages().add("You: " + message);
+
+        // Add message to receiver's messages
+        receiverProfile.getMessages().add(senderUsername + ": " + message);
+        
+        // Save the messages to the database
+        saveMessage(senderUsername, receiverUsername, message);
     }
-    public List<UserProfile> findPotentialConnections(UserProfile currentUserProfile) {
-        List<UserProfile> potentialConnections = new ArrayList<>();
+
+    public List<String> getMessages() {
+        List<String> allMessages = new ArrayList<>();
         for (UserProfile userProfile : userProfiles) {
-            if (userProfile != currentUserProfile) {
-                int compatibilityScore = calculateCompatibility(currentUserProfile.getSkillsToLearn(), userProfile.getSkills(), userProfile);
-                if (compatibilityScore > 0) {
-                    potentialConnections.add(userProfile);
+            allMessages.addAll(userProfile.getMessages());
+        }
+        return allMessages;
+    }
+
+
+    public List<UserProfile> findPotentialConnections(UserProfile userProfile) {
+        List<UserProfile> potentialConnections = new ArrayList<>();
+        // Implement the logic to find potential connections based on the user's skills to learn
+        // For example, you might iterate over all user profiles and check if they have skills that the current user wants to learn
+        for (UserProfile otherProfile : userProfiles) {
+            if (!otherProfile.getUsername().equals(userProfile.getUsername())) {
+                // Check if otherProfile's skills intersect with userProfile's skillsToLearn
+                boolean hasCommonSkill = false;
+                for (String skill : userProfile.getSkillsToLearn()) {
+                    if (Arrays.asList(otherProfile.getSkills()).contains(skill)) {
+                        hasCommonSkill = true;
+                        break;
+                    }
+                }
+                if (hasCommonSkill) {
+                    potentialConnections.add(otherProfile);
                 }
             }
         }
         return potentialConnections;
     }
+    
+    public void saveMessage(String senderUsername, String receiverUsername, String message) {
+        // Implement the logic to save messages to your database
+        // For example, you can append the message to a file, store it in a relational database, or use any other persistence mechanism
+        // Here, I'll demonstrate saving messages to a file for simplicity
+        try {
+            // Open the message file for appending
+            BufferedWriter writer = new BufferedWriter(new FileWriter(MESSAGE_DATA_FILE, true));
+            // Write the message in the format: senderUsername,receiverUsername,message
+            writer.write(senderUsername + "," + receiverUsername + "," + message);
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendNotification(String recipientUsername, String message) {
+        String notification = "Notification sent to " + recipientUsername + ": " + message;
+        addNotification(notification);
+        logger.info("Notification sent: {}", notification);
+    }
 
+    public void addNotification(String notification) {
+        notifications.add(notification);
+    }
+
+    public List<String> getNotifications() {
+        logger.info("Retrieving notifications from the database...");
+        logger.debug("Current notifications: {}", notifications);
+        return notifications;
+    }
 }

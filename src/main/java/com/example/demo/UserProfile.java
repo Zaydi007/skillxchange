@@ -1,10 +1,14 @@
 package com.example.demo;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class UserProfile {
     private String username;
     private String password;
     private String[] skills;
     private String[] skillsToLearn;
+    private List<String> messages;
 
     // Constructor
     public UserProfile(String username, String password, String[] skills, String[] skillsToLearn) {
@@ -12,6 +16,7 @@ public class UserProfile {
         this.password = password;
         this.skills = skills;
         this.skillsToLearn = skillsToLearn;
+        this.messages = new ArrayList<>(); // Initialize the messages list
     }
 
     // Getters and setters
@@ -45,5 +50,13 @@ public class UserProfile {
 
     public void setSkillsToLearn(String[] skillsToLearn) {
         this.skillsToLearn = skillsToLearn;
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<String> messages) {
+        this.messages = messages;
     }
 }

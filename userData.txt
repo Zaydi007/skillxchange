@@ -10,3 +10,4 @@ asad,huhuhuh,Data Analysis,Writing
 dummy,123,Programming,Design
 ray,9966,Programming,Communication
 troy,123,Data Analysis,Design
+rhett,123,Design,Writing

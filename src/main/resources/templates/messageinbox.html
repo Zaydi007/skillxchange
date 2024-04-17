@@ -1,89 +1,146 @@
 <!DOCTYPE html>
+<html>
 <head>
-<title>SkillXChange</title>
-<!--A header that says application name-->
-<div class ="appheader">
-	<h1>S     k     i     l     l     X     C     h     a     n     g     e</h1>
-</div>
-<style>
-	.appheader {
-        background-color: #e1e8e7;
-        color: black;
-        padding: 10px;
-        text-align: center;
-    }
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .sidebar {
-        height: 100%;
-        width: 200px;
-        position: fixed;
-        /* fixing the sidebar to lie below the header */
-        top: 100px;
-        left: 0;
-        background-color: #a3a3a3;
-        padding-top: 20px;
-		text-shadow: 0 0 4px #000;
-    }
-    
-    .tab-label {
-        color: #fff;
-        display: block;
-        padding: 10px 20px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        font-weight: bold;
-    }
-    
-    .tab-header {
-    	position: fixed;
-    	top: 90px;
-    	left: 200px;
-        display: block;
-        padding: 20px;
- 		font-size: 45px
-    }
-    
-    .friends-content {
-    	text-decoration: none;
-    	text-align: center;
-    	position: fixed;
-    	top: 120px;
-    	right: 100px;
-    	padding: 20px;
-    	font-size: 20px;
-    	width: 330px;
-    	height: 80%;
-    	border: 2px solid #ccc;
-    	border-radius: 5px;
-    	background-color: #f9f9f9;
-    }
-    
-    .tab-label:hover {
-    	/*tab changes color when user hovers over it */
-        background-color: #8c8c8c;
-    }
-    
-</style>
+    <title>SkillXChange</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .appheader {
+            background-color: #e1e8e7;
+            color: black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            background-color: #a3a3a3;
+            padding-top: 20px;
+            text-shadow: 0 0 4px #000;
+        }
+
+        .tab-label {
+            color: #fff;
+            display: block;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .tab-label:hover {
+            background-color: #8c8c8c;
+        }
+
+        /* Styles specific to the tab header */
+        .tab-header {
+            position: fixed;
+            top: 90px;
+            left: 220px;
+            display: block;
+            padding: 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* Styles specific to the messages list */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Styles specific to the message form */
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: vertical; /* Allow vertical resizing of the textarea */
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        /* Styles specific to the friends content */
+        .friends-content {
+            text-decoration: none;
+            text-align: center;
+            position: fixed;
+            top: 120px;
+            right: 100px;
+            padding: 20px;
+            font-size: 20px;
+            width: 330px;
+            height: 80%;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
+<div class="appheader">
+    <h1>SkillXChange</h1>
+</div>
 <div class="sidebar">
-	<!--providing links to the corresponding html pages for each tab-->
+    <!--providing links to the corresponding html pages for each tab-->
     <a href="/main" class="tab-label">Home</a>
     <a href="/notifications" class="tab-label">Notifications</a>
     <a href="/userprofile" class="tab-label">User Profile</a>
     <a href="/messageinbox" class="tab-label">Message Inbox</a>
 </div>
-<div class="tab-header"
-	<h1>Your Messages</h1>
+<div class="tab-header">
+    <h1>Your Messages</h1>
+    <!-- Display messages -->
+    <ul>
+        <li th:each="message : ${messages}">
+            <p th:text="${message}"></p>
+        </li>
+    </ul>
+    <!-- Form to send messages -->
+    <form method="post" action="/send-message">
+        <input type="text" name="receiver" placeholder="Receiver username"><br>
+        <textarea name="message" placeholder="Your message"></textarea><br>
+        <button type="submit">Send</button>
+    </form>
 </div>
-<div class="friends-content"
-	<p>Your friends</p>
+<div class="friends-content">
+    <p>Your friends</p>
+    <!-- Add content related to friends here -->
 </div>
 </body>
 </html>
+
+
