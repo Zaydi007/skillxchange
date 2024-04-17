@@ -4,7 +4,7 @@
     <title>SkillXChange</title>
     <!--A header that says application name-->
     <div class="appheader">
-        <h1>SkillXChange</h1>
+        <h1>S     k     i     l     l     X     C     h     a     n     g     e</h1>
     </div>
     <style>
         .appheader {
@@ -85,7 +85,35 @@
             margin-top: 5px;
         }
 
-        .connect-button {
+        .button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .secondconnect-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .thirdconnect-button {
             background-color: #3498db;
             color: white;
             border: none;
@@ -111,7 +139,7 @@
 <div class="tab-content">
     <h2>Xchanges Awaiting</h2>
     <!-- Display potential connections -->
-    <div th:each="connection : ${potentialConnections}" class="potential-connection">
+    <div th:each="connection : ${firstConnection}" class="potential-connection">
         <span class="username" th:text="${connection.username}"></span><br/>
         <span class="skills">
             <b>Skills:</b>
@@ -121,7 +149,31 @@
             <b>Skills Seeking:</b>
             <span th:each="skill : ${connection.skillsToLearn}" th:text="${skill}"></span>
         </span><br/>
-        <button class="connect-button">Connect</button>
+        <a th:href="@{/firstconnect}" class="button">Connect</a>
+    </div>
+    <div th:each="connection : ${secondConnection}" class="potential-connection">
+        <span class="username" th:text="${connection.username}"></span><br/>
+        <span class="skills">
+            <b>Skills:</b>
+            <span th:each="skill : ${connection.skills}" th:text="${skill}"></span>
+        </span><br/>
+        <span class="skills">
+            <b>Skills Seeking:</b>
+            <span th:each="skill : ${connection.skillsToLearn}" th:text="${skill}"></span>
+        </span><br/>
+        <a th:href="@{/secondconnect}" class="button">Connect</a>
+    </div>
+    <div th:each="connection : ${thirdConnection}" class="potential-connection">
+        <span class="username" th:text="${connection.username}"></span><br/>
+        <span class="skills">
+            <b>Skills:</b>
+            <span th:each="skill : ${connection.skills}" th:text="${skill}"></span>
+        </span><br/>
+        <span class="skills">
+            <b>Skills Seeking:</b>
+            <span th:each="skill : ${connection.skillsToLearn}" th:text="${skill}"></span>
+        </span><br/>
+        <a th:href="@{/thirdconnect}" class="button">Connect</a>
     </div>
 </div>
 <div class="sidebar" style="right: 0;">

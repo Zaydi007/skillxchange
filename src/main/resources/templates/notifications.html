@@ -54,6 +54,20 @@
         background-color: #8c8c8c;
     }
     
+    .content-box {
+    	margin-bottom: 10px;
+    	position: fixed;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        width: 20%;
+        margin: 0 auto 20px;
+        top: 200px;
+        left: 400px;
+    }
+    
 </style>
 </head>
 <body>
@@ -66,6 +80,14 @@
 </div>
 <div class="tab-content"
 	<h1>Your Notifications</h1>
+</div>
+<div class="content-box">
+	<h3>Connect Requests</h3>
+	<div th:each="request : ${requests}" class="connect-requests">
+		<span class="username" th:text="${request.username}"></span><br/>
+		<button type="accept-button">Accept</button>
+		<button type="decline-button">Decline</button>
+	</div>
 </div>
 </body>
 </html>
