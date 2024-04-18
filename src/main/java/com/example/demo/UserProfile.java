@@ -59,4 +59,5 @@ public class UserProfile {
     public void setMessages(List<String> messages) {
         this.messages = messages;
     }
+    
 }
