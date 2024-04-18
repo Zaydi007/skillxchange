@@ -3,6 +3,14 @@
 <head>
     <title>SkillXChange</title>
     <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
         .appheader {
             background-color: #e1e8e7;
             color: black;
@@ -10,12 +18,7 @@
             text-align: center;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* Sidebar Styles */
         .sidebar {
             height: 100%;
             width: 200px;
@@ -35,39 +38,81 @@
             cursor: pointer;
             transition: background-color 0.3s;
             font-weight: bold;
-        }
-
-        .tab-content {
-            position: fixed;
-            top: 90px;
-            left: 200px;
-            display: block;
-            padding: 20px;
-            font-size: 16px;
+            text-decoration: none;
         }
 
         .tab-label:hover {
             background-color: #8c8c8c;
         }
+
+        /* Content Styles */
+        .tab-content {
+            position: fixed;
+            top: 90px;
+            left: 200px;
+            padding: 20px;
+            font-size: 16px;
+        }
+
+        /* Notifications Styles */
+        .notifications h2 {
+            margin-bottom: 10px;
+        }
+
+        .notifications ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .notifications li {
+            margin-bottom: 10px;
+        }
+
+        /* Button Styles */
+        .accept-btn,
+        .deny-btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .accept-btn:hover,
+        .deny-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="appheader">
         <h1>S k i l l X C h a n g e</h1>
     </div>
+
+    <!-- Sidebar -->
     <div class="sidebar">
         <a href="/main" class="tab-label">Home</a>
         <a href="/notifications" class="tab-label">Notifications</a>
         <a href="/userprofile" class="tab-label">User Profile</a>
         <a href="/messageinbox" class="tab-label">Message Inbox</a>
     </div>
+
+    <!-- Content -->
     <div class="tab-content">
         <h1>Your Notifications</h1>
         <div class="notifications">
-            <h2>Notifications</h2>
+            <h2>Connection Requests</h2>
             <ul>
-                <!-- Thymeleaf will populate this list -->
-                <li th:each="notification : ${notifications}" th:text="${notification}"></li>
+                <!-- Thymeleaf iteration over notifications -->
+                <li th:each="notification : ${notifications}">
+                    <span th:text="${notification}"></span> <!-- Display notification -->
+                    <!-- Accept and deny buttons -->
+                    <button class="accept-btn">Accept</button>
+                    <button class="deny-btn">Deny</button>
+                </li>
             </ul>
         </div>
     </div>
