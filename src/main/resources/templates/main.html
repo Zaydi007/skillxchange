@@ -7,6 +7,7 @@
         <h1>SkillXChange</h1>
     </div>
     <style>
+        /* CSS styles here */
         .appheader {
             background-color: #e1e8e7;
             color: black;
@@ -24,7 +25,6 @@
             height: 100%;
             width: 200px;
             position: fixed;
-            /* fixing the sidebar to lie below the header */
             top: 100px;
             background-color: #a3a3a3;
             padding-top: 20px;
@@ -48,58 +48,9 @@
         }
 
         .tab-label:hover {
-            /*tab changes color when user hovers over it */
             background-color: #8c8c8c;
         }
 
-        .main-content {
-            margin-left: 220px;
-            margin-right: 220px;
-        }
-
-        .acquired-connections {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .potential-connection {
-            margin-bottom: 10px;
-            text-align: left;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            width: 50%;
-            margin: 0 auto 20px;
-        }
-
-        .potential-connection:hover {
-            background-color: #e9e9e9;
-        }
-
-        .username {
-            font-weight: bold;
-        }
-
-        .skills {
-            margin-top: 5px;
-        }
-
-        .connect-button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        
-        /* Additional styles */
         .potential-connection {
             margin-bottom: 20px;
             padding: 15px;
@@ -115,10 +66,13 @@
             background-color: #e9e9e9;
         }
 
+        .username {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
         .skills {
-            margin-top: 5px;
-            font-style: italic;
-            color: #666;
+            margin-top: 10px;
         }
 
         .connect-button {
@@ -153,23 +107,23 @@
 <div class="tab-content">
     <h2>Xchanges Awaiting</h2>
     <!-- Display potential connections -->
-   <div th:each="connection : ${potentialConnections}" class="potential-connection">
-    <span class="username" th:text="${connection.username}"></span><br/>
-    <span class="skills">
-        <b>Skills:</b>
-        <span th:each="skill : ${connection.skills}" th:text="${skill}"></span>
-    </span><br/>
-    <span class="skills">
-        <b>Skills Seeking:</b>
-        <span th:each="skill : ${connection.skillsToLearn}" th:text="${skill}"></span>
-    </span><br/>
-    <!-- Add form submission for connecting -->
-    <form method="post" action="/connect">
-        <input type="hidden" name="username" th:value="${connection.username}" />
-        <button type="submit" class="connect-button">Connect</button>
-    </form>
-</div>
-
+    <div th:each="connection : ${potentialConnections}" class="potential-connection">
+        <span class="username" th:text="${connection.username}"></span><br/>
+        <div class="skills">
+            <b>Skills:</b>
+            <span th:each="skill : ${connection.skills}" th:text="${skill}"></span>
+        </div>
+        <div class="skills">
+            <b>Skills Seeking:</b>
+            <span th:each="skill : ${connection.skillsToLearn}" th:text="${skill}"></span>
+        </div>
+        <!-- Add form submission for connecting -->
+        <form method="post" action="/connect" style="margin-top: 10px;">
+            <input type="hidden" name="requesterUsername" th:value="${requesterUsername}" />
+            <input type="hidden" name="requestedUsername" th:value="${connection.username}" />
+            <button type="submit" class="connect-button">Connect</button>
+        </form>
+    </div>
 </div>
 <div class="sidebar" style="right: 0;">
     <h2>Acquired Connections</h2>
@@ -181,15 +135,10 @@
 <script>
     // JavaScript function to change button text to "Connection Requested" when clicked
     function requestConnection(username) {
-        // Get the button element by its id
         var button = document.getElementById('connectButton_' + username);
-        // Change the button text to "Connection Requested"
         button.innerHTML = 'Connection Requested';
-        // Disable the button to prevent multiple requests
         button.disabled = true;
-        
-        // Submit the form asynchronously
-        var form = document.getElementById('connectForm_' + username);
+        var form = button.closest('form');
         var formData = new FormData(form);
         var xhr = new XMLHttpRequest();
         xhr.open(form.method, form.action, true);
@@ -198,5 +147,3 @@
 </script>
 </body>
 </html>
-
-
