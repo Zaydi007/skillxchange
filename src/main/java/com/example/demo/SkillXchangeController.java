@@ -75,7 +75,7 @@ public class SkillXchangeController {
         return "messageinbox"; // Return the Thymeleaf template for message inbox
     }
     
-    @PostMapping("/connect")
+   /* @PostMapping("/connect")
     public String connect(@RequestParam("username") String username, HttpSession session, Model model) {
         String currentUser = (String) session.getAttribute("currentUser");
         String notificationMessage = currentUser + " connected with you on SkillXChange!";
@@ -88,7 +88,7 @@ public class SkillXchangeController {
         model.addAttribute("notifications", notifications); // Add notifications to the model
         return "redirect:/main"; // Redirects to the main page after connecting
     }
-
+*/
 
 
 }
