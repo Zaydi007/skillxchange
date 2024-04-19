@@ -28,6 +28,18 @@ public class NotificationService {
             logger.error("Error saving notification to file: {}", e.getMessage());
         }
     }
+    
+    public void markNotificationAsAccepted(String username, String message) {
+        // Implement logic to mark the notification as accepted
+        // For example, you can update the status of the notification in the database
+        logger.info("Notification accepted by {}: {}", username, message);
+    }
+    
+    public void markNotificationAsDenied(String username, String message) {
+        // Implement logic to mark the notification as denied
+        // For example, you can update the status of the notification in the database
+        logger.info("Notification denied by {}: {}", username, message);
+    }
 
     public List<String> getNotificationsForUser(String username) {
         List<String> notifications = new ArrayList<>();

@@ -1,48 +1,51 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${pageTitle}">SkillXchange Landing Page</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: url('/images/image.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: #000; /* Set text color to black */
-        }
+<title th:text="${pageTitle}">SkillXchange Landing Page</title>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	background: url('/images/image.jpg') no-repeat center center fixed;
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	color: #000; /* Set text color to black */
+}
 
-        .buttons-container {
-            display: flex;
-            flex-direction: row;
-            margin-top: 360px; /* Adjusted margin-top to move buttons further down */
-        }
+.buttons-container {
+	display: flex;
+	flex-direction: row;
+	margin-top: 360px;
+	/* Adjusted margin-top to move buttons further down */
+}
 
-        .button {
-            margin: 0 10px; /* Adjusted margin for spacing between buttons */
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #3498db; /* Set background color to a shade of blue */
-            color: #fff; /* Set text color to white */
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+.button {
+	margin: 0 10px; /* Adjusted margin for spacing between buttons */
+	padding: 10px 20px;
+	font-size: 16px;
+	background-color: #3498db;
+	/* Set background color to a shade of blue */
+	color: #fff; /* Set text color to white */
+	text-decoration: none;
+	border-radius: 5px;
+}
+</style>
 </head>
 <body>
-    <div id="skillXchangeContent">
-        <!-- Add more content using Thymeleaf expressions -->
-    </div>
+	<div id="skillXchangeContent">
+		<!-- Add more content using Thymeleaf expressions -->
+	</div>
 
-    <!-- Container for buttons -->
-    <div class="buttons-container">
-        <!-- Buttons for login and sign-up -->
-        <a th:href="@{/login}" class="button">Login</a>
-        <a th:href="@{/signup}" class="button">Sign Up</a>
-    </div>
+	<!-- Container for buttons -->
+	<div class="buttons-container">
+		<!-- Buttons for login and sign-up -->
+		<a th:href="@{/login}" class="button">Login</a> <a
+			th:href="@{/signup}" class="button">Sign Up</a>
+	</div>
 </body>
 </html>

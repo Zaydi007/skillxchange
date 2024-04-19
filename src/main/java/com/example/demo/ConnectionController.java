@@ -40,4 +40,21 @@ public class ConnectionController {
         // Redirect to the main page on successful connection request
         return "redirect:/main";
     }
+    
+    @PostMapping("/accept-connection")
+    public String acceptConnection(@RequestParam("notificationMessage") String notificationMessage) {
+        // Extract sender information from notificationMessage and process the acceptance
+        // For example:
+        // notificationService.markNotificationAsAccepted(senderUsername, notificationMessage);
+        // processConnectionRequest(senderUsername);
+        return "redirect:/notifications"; // Redirect back to notifications page
+    }
+    
+    @PostMapping("/deny-connection")
+    public String denyConnection(@RequestParam("notificationMessage") String notificationMessage) {
+        // Extract sender information from notificationMessage and process the denial
+        // For example:
+        // notificationService.markNotificationAsDenied(senderUsername, notificationMessage);
+        return "redirect:/notifications"; // Redirect back to notifications page
+    }
 }

@@ -23,6 +23,9 @@ dependencies {
     implementation 'com.h2database:h2'
     implementation 'org.springframework.integration:spring-integration-core'
     implementation 'org.springframework.integration:spring-integration-file'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
+	implementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {

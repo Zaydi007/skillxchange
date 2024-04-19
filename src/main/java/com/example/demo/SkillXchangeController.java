@@ -18,12 +18,10 @@ public class SkillXchangeController {
 	private static final Logger logger = LoggerFactory.getLogger(SkillXchangeController.class);
 
     private final SkillXChangeDatabase skillXChangeDatabase;
-    private final MessageService messageService; // Add this field
 
     @Autowired
-    public SkillXchangeController(SkillXChangeDatabase skillXChangeDatabase, MessageService messageService) {
+    public SkillXchangeController(SkillXChangeDatabase skillXChangeDatabase) {
         this.skillXChangeDatabase = skillXChangeDatabase;
-        this.messageService = messageService; // Initialize the messageService field
     }
 
     @GetMapping("/skillxchange")
@@ -49,16 +47,6 @@ public class SkillXchangeController {
         
         // Redirect the user to a success page or another appropriate page
         return "redirect:/main"; // Redirects to the main page
-    }
-
-    @PostMapping("/send-message")
-    public String sendMessage(@RequestParam("receiver") String receiverUsername,
-                              @RequestParam("message") String message,
-                              HttpSession session) {
-        String senderUsername = (String) session.getAttribute("currentUser");
-        // Use the MessageService to send the message
-        messageService.sendMessage(senderUsername, receiverUsername, message);
-        return "redirect:/messageinbox"; // Redirect to the message inbox after sending the message
     }
 
     @GetMapping("/messageinbox")
