@@ -1,5 +1,13 @@
+/************************************
+//Program Name: NotificationService.java
+//Developer: XChange
+//Date Created: 04/19/2024
+//Version: 1.0
+//Purpose: functionality for the notifications service, saves to to text file, and an import from text file
+//************************************
 package com.example.demo;
 
+//imports
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +15,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//NotifocationService class
 @Service
 public class NotificationService {
 
@@ -39,8 +48,9 @@ public class NotificationService {
         // Implement logic to mark the notification as denied
         // For example, you can update the status of the notification in the database
         logger.info("Notification denied by {}: {}", username, message);
-    }
+    }//end of sendNotification
 
+    //getNotificationsForUser method imports from text file
     public List<String> getNotificationsForUser(String username) {
         List<String> notifications = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(NOTIFICATION_DATA_FILE))) {
@@ -55,6 +65,6 @@ public class NotificationService {
             logger.error("Error reading notifications from file: {}", e.getMessage());
         }
         return notifications;
-    }
+    }//end of getNotificationsForUser method
     
-}
+}//end NotificationSerice
