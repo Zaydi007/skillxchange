@@ -1,8 +1,17 @@
+//************************************
+//Program Name: UserProfile.java
+//Developer: XChange
+//Date Created: 04/19/2024
+//Version: 1.0
+//Purpose: has methods for retrieving user information
+//************************************
 package com.example.demo;
 
+//imports
 import java.util.List;
 import java.util.ArrayList;
 
+//UserProfile class
 public class UserProfile {
     private String username;
     private String password;
@@ -59,5 +68,5 @@ public class UserProfile {
     public void setMessages(List<String> messages) {
         this.messages = messages;
     }
-    
-}
+    //end of setters and getters
+}//end of UserProfile
