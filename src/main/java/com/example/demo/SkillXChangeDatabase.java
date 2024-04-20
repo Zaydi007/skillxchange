@@ -1,5 +1,13 @@
+//************************************
+//Program Name: SkillXChangeDatabase.java
+//Developer: XChange
+//Date Created: 04/19/2024
+//Version: 1.0
+//Purpose: includes methods for saving and getting user information to a text file as a database
+//************************************
 package com.example.demo;
 
+//imports
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//SkillXChangeDatabase class
 @Service
 public class SkillXChangeDatabase {
 
@@ -19,11 +28,13 @@ public class SkillXChangeDatabase {
     private List<UserProfile> userProfiles;
     private List<String> notifications = new ArrayList<>();
 
+	
     public SkillXChangeDatabase() {
         userProfiles = new ArrayList<>();
         loadUserData();
     }
 
+	//loadUserData method
     private void loadUserData() {
         try {
             File userDataFile = new File(USER_DATA_FILE);
@@ -44,8 +55,9 @@ public class SkillXChangeDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }//end of loadUserData method
 
+	//isValidUser method checks if a user is Valid
     public boolean isValidUser(String username, String password) {
         for (UserProfile userProfile : userProfiles) {
             if (userProfile.getUsername().equals(username) && userProfile.getPassword().equals(password)) {
@@ -53,8 +65,9 @@ public class SkillXChangeDatabase {
             }
         }
         return false;
-    }
+    }//end of isValidUser method
 
+	//saveUserData method
     public void saveUserData(String username, String password, String[] skills, String[] skillsToLearn) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(USER_DATA_FILE, true));
@@ -67,12 +80,13 @@ public class SkillXChangeDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }//end of saveUserData
 
     public List<UserProfile> getAllUserProfiles() {
         return userProfiles;
     }
 
+	//getUserProfile returns a profile
     public UserProfile getUserProfile(String username) {
         for (UserProfile userProfile : userProfiles) {
             if (userProfile.getUsername().equals(username)) {
@@ -80,7 +94,7 @@ public class SkillXChangeDatabase {
             }
         }
         return null;
-    }
+    }//end of getUserProfile
 
    /* public void sendMessage(String senderUsername, String receiverUsername, String message) {
         UserProfile senderProfile = getUserProfile(senderUsername);
@@ -99,6 +113,8 @@ public class SkillXChangeDatabase {
         // Add message to receiver's messages
         receiverProfile.getMessages().add(senderUsername + ": " + message);
     }*/
+
+	//sendMessage method
     public void sendMessage(String senderUsername, String receiverUsername, String message) {
         UserProfile senderProfile = getUserProfile(senderUsername);
         UserProfile receiverProfile = getUserProfile(receiverUsername);
@@ -126,9 +142,9 @@ public class SkillXChangeDatabase {
             allMessages.addAll(userProfile.getMessages());
         }
         return allMessages;
-    }
+    }//end of sendMessage method
 
-
+	//findPotentialConnections method
     public List<UserProfile> findPotentialConnections(UserProfile userProfile) {
         List<UserProfile> potentialConnections = new ArrayList<>();
         // Implement the logic to find potential connections based on the user's skills to learn
@@ -149,8 +165,9 @@ public class SkillXChangeDatabase {
             }
         }
         return potentialConnections;
-    }
-    
+    }//end of findPotentialConnections method
+
+	//saveMessage method
     public void saveMessage(String senderUsername, String receiverUsername, String message) {
         // Implement the logic to save messages to your database
         // For example, you can append the message to a file, store it in a relational database, or use any other persistence mechanism
@@ -165,21 +182,23 @@ public class SkillXChangeDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
+    }//end of saveMessage method
+
+	//sendNotificaton method
     public void sendNotification(String recipientUsername, String message) {
         String notification = "Notification sent to " + recipientUsername + ": " + message;
         addNotification(notification);
         logger.info("Notification sent: {}", notification);
-    }
+    }//end of sendNotification
 
     public void addNotification(String notification) {
         notifications.add(notification);
     }
 
+	//getNotification method
     public List<String> getNotifications() {
         logger.info("Retrieving notifications from the database...");
         logger.debug("Current notifications: {}", notifications);
         return notifications;
-    }
-}
+    }//end of getNotification
+}//end of SkillXChangeDatabase method
