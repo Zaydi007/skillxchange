@@ -1,5 +1,5 @@
 //************************************
-//Program Name: ChatController.java
+//Program Name: MyController.java
 //Developer: XChange
 //Date Created: 04/19/2024
 //Version: 1.0
