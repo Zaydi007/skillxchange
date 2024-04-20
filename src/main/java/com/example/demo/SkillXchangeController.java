@@ -1,5 +1,13 @@
+//************************************
+//Program Name: SkillXChangeController.java
+//Developer: XChange
+//Date Created: 04/19/2024
+//Version: 1.0
+//Purpose: allows connection to front end with backend
+//************************************
 package com.example.demo;
 
+//imports
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
+//SkillXChangeController
 @Controller
 public class SkillXchangeController {
 
@@ -24,18 +33,20 @@ public class SkillXchangeController {
         this.skillXChangeDatabase = skillXChangeDatabase;
     }
 
+	//skillxchangeLandingPage method connection to front end
     @GetMapping("/skillxchange")
     public String skillXchangeLandingPage(Model model) {
         model.addAttribute("pageTitle", "SkillXchange Landing Page");
         // Add more model attributes as needed for your Thymeleaf template
         return "skillxchange-landing";
-    }
+    }//end of skillxchangeLandingPage
     
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
         return "signup"; // Renders the signup.html template
     }
 
+	//signUp method to connect with front end
     @PostMapping("/signup")
     public String signUp(@RequestParam("username") String username,
                          @RequestParam("password") String password,
@@ -47,8 +58,9 @@ public class SkillXchangeController {
         
         // Redirect the user to a success page or another appropriate page
         return "redirect:/main"; // Redirects to the main page
-    }
+    }//end of signUp method
 
+	//showMessages method
     @GetMapping("/messageinbox")
     public String showMessages(Model model, HttpSession session) {
         String currentUser = (String) session.getAttribute("currentUser");
@@ -61,7 +73,7 @@ public class SkillXchangeController {
         List<String> messages = skillXChangeDatabase.getMessages(); // Assuming getMessages() doesn't require parameters
         model.addAttribute("messages", messages);
         return "messageinbox"; // Return the Thymeleaf template for message inbox
-    }
+    }//showMessages method
     
    /* @PostMapping("/connect")
     public String connect(@RequestParam("username") String username, HttpSession session, Model model) {
@@ -79,4 +91,4 @@ public class SkillXchangeController {
 */
 
 
-}
+}//end of SkillXChangeController
